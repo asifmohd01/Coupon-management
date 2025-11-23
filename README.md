@@ -1,3 +1,7 @@
+
+---
+
+````md
 # Coupon Management
 
 A backend service for managing discount coupons in an e-commerce system.  
@@ -36,44 +40,51 @@ The application provides APIs to create coupons with configurable eligibility ru
 1. Install dependencies:
    ```bash
    npm install
-Start the server:
+````
 
-bash
-Copy code
-npm start
-Server runs at: http://localhost:3000
+2. Start the server:
 
-Development mode:
+   ```bash
+   npm start
+   ```
 
-bash
-Copy code
-npm run dev
-🧪 Running Tests
+   Server runs at: **[http://localhost:3000](http://localhost:3000)**
+
+3. Development mode:
+
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🧪 Running Tests
+
 The project includes comprehensive tests covering:
 
-Coupon creation
-
-Eligibility rule validation
-
-Discount calculation
-
-Usage limits
-
-Tie-breaking logic
+* Coupon creation
+* Eligibility rule validation
+* Discount calculation
+* Usage limits
+* Tie-breaking logic
 
 Run tests:
 
-bash
-Copy code
+```bash
 npm test
-📘 API Documentation
-1. POST /coupons
+```
+
+---
+
+## 📘 API Documentation
+
+### **1. POST /coupons**
+
 Create or update a coupon.
 
-Example:
+**Example:**
 
-json
-Copy code
+```json
 {
   "code": "SAVE20",
   "description": "20% off on electronics",
@@ -89,13 +100,17 @@ Copy code
     "applicableCategories": ["electronics"]
   }
 }
-2. POST /coupons/best
+```
+
+---
+
+### **2. POST /coupons/best**
+
 Returns the best applicable coupon for a user and cart.
 
-Example Request:
+**Example Request:**
 
-json
-Copy code
+```json
 {
   "userContext": {
     "userId": "u123",
@@ -111,101 +126,109 @@ Copy code
     ]
   }
 }
-Response:
+```
 
-json
-Copy code
+**Response:**
+
+```json
 {
   "coupon": { "code": "SAVE20" },
   "discount": 300
 }
+```
+
 If no coupon applies:
 
-json
-Copy code
+```json
 {
   "coupon": null,
   "discount": 0
 }
-3. GET /coupons
+```
+
+---
+
+### **3. GET /coupons**
+
 Returns all stored coupons.
 
-4. GET /health
+---
+
+### **4. GET /health**
+
 Health check endpoint.
 
-json
-Copy code
+```json
 { "status": "ok" }
-📑 Coupon Structure
+```
+
+---
+
+## 📑 Coupon Structure
+
 Each coupon supports:
 
-code
+* `code`
+* `description`
+* `discountType` (FLAT or PERCENT)
+* `discountValue`
+* `maxDiscountAmount` (optional)
+* `startDate`, `endDate`
+* `usageLimitPerUser`
+* `eligibility` object
 
-description
+---
 
-discountType (FLAT or PERCENT)
+## 🎯 Eligibility Rules
 
-discountValue
+### User-based:
 
-maxDiscountAmount (optional)
+* allowedUserTiers
+* minLifetimeSpend
+* minOrdersPlaced
+* firstOrderOnly
+* allowedCountries
 
-startDate, endDate
+### Cart-based:
 
-usageLimitPerUser
-
-eligibility object
-
-🎯 Eligibility Rules
-User-based:
-allowedUserTiers
-
-minLifetimeSpend
-
-minOrdersPlaced
-
-firstOrderOnly
-
-allowedCountries
-
-Cart-based:
-minCartValue
-
-applicableCategories
-
-excludedCategories
-
-minItemsCount
+* minCartValue
+* applicableCategories
+* excludedCategories
+* minItemsCount
 
 Any missing eligibility field is treated as no restriction.
 
-🔎 Best Coupon Selection Logic
-Validate date window
+---
 
-Check usage limits
+## 🔎 Best Coupon Selection Logic
 
-Verify eligibility rules
+1. Validate date window
+2. Check usage limits
+3. Verify eligibility rules
+4. Calculate effective discount
+5. Apply tie-breakers:
 
-Calculate effective discount
+   * Higher discount wins
+   * If tie → earlier end date
+   * If tie → lexicographically smaller code
 
-Apply tie-breakers:
+---
 
-Higher discount wins
+## 📊 Usage Tracking
 
-If tie → earlier end date
-
-If tie → lexicographically smaller code
-
-📊 Usage Tracking
 Usage is stored in-memory:
 
-javascript
-Copy code
+```
 Map<userId, Map<couponCode, usageCount>>
-This enables enforcement of usageLimitPerUser.
+```
 
-📂 Project Structure
-pgsql
-Copy code
+This enables enforcement of `usageLimitPerUser`.
+
+---
+
+## 📂 Project Structure
+
+```
 coupon-management/
 ├── models/
 ├── routes/
@@ -215,3 +238,16 @@ coupon-management/
 ├── server.js
 ├── postman_collection.json
 └── README.md
+```
+
+---
+
+## 📌 Notes
+
+* Backend-only project as required
+* No authentication or UI
+* Data is stored in memory for simplicity
+
+---
+
+
