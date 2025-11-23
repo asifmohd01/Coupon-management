@@ -1,0 +1,21 @@
+{
+  "name": "coupon-management-system",
+  "version": "1.0.0",
+  "description": "E-commerce Coupon Management System Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "jest"
+  },
+  "keywords": ["coupon", "ecommerce", "backend"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  }
+}

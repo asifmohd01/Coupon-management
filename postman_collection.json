@@ -1,0 +1,104 @@
+{
+  "info": {
+    "name": "Coupon Management API",
+    "description": "Collection for Coupon Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Create Coupon - FLAT",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"WELCOME100\",\n  \"description\": \"Welcome discount of ₹100\",\n  \"discountType\": \"FLAT\",\n  \"discountValue\": 100,\n  \"startDate\": \"2024-01-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"usageLimitPerUser\": 1,\n  \"eligibility\": {\n    \"allowedUserTiers\": [\"NEW\"],\n    \"minCartValue\": 500\n  }\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/coupons",
+          "host": ["{{base_url}}"],
+          "path": ["coupons"]
+        }
+      }
+    },
+    {
+      "name": "Create Coupon - PERCENT",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"SAVE20\",\n  \"description\": \"20% off on electronics\",\n  \"discountType\": \"PERCENT\",\n  \"discountValue\": 20,\n  \"maxDiscountAmount\": 500,\n  \"startDate\": \"2024-01-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"usageLimitPerUser\": 1,\n  \"eligibility\": {\n    \"allowedUserTiers\": [\"NEW\", \"REGULAR\"],\n    \"minCartValue\": 1000,\n    \"applicableCategories\": [\"electronics\"]\n  }\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/coupons",
+          "host": ["{{base_url}}"],
+          "path": ["coupons"]
+        }
+      }
+    },
+    {
+      "name": "Get All Coupons",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/coupons",
+          "host": ["{{base_url}}"],
+          "path": ["coupons"]
+        }
+      }
+    },
+    {
+      "name": "Find Best Coupon",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userContext\": {\n    \"userId\": \"u123\",\n    \"userTier\": \"NEW\",\n    \"country\": \"IN\",\n    \"lifetimeSpend\": 1200,\n    \"ordersPlaced\": 2\n  },\n  \"cart\": {\n    \"items\": [\n      {\n        \"productId\": \"p1\",\n        \"category\": \"electronics\",\n        \"unitPrice\": 1500,\n        \"quantity\": 1\n      },\n      {\n        \"productId\": \"p2\",\n        \"category\": \"fashion\",\n        \"unitPrice\": 500,\n        \"quantity\": 2\n      }\n    ]\n  }\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/coupons/best",
+          "host": ["{{base_url}}"],
+          "path": ["coupons", "best"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
+
