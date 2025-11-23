@@ -1,7 +1,6 @@
 
 ---
 
-````md
 # Coupon Management
 
 A backend service for managing discount coupons in an e-commerce system.  
